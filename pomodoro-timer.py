@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from collections import deque
 
 
 class MainApp(tk.Tk):
@@ -21,8 +22,10 @@ class Timer(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.current_time = tk.StringVar(value="01:05")
+        self.current_time = tk.StringVar(value="00:10")
         self.timer_running = True
+        self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
+        self.timer_schedule = deque(self.timer_order)
 
         timer_frame = ttk.Frame(self, height="100")
         timer_frame.grid(pady=(10, 0), sticky="NSEW")
@@ -48,7 +51,18 @@ class Timer(ttk.Frame):
             self.current_time.set(f"{minutes:02d}:{seconds:02d}")
             self.after(1000, self.countdown)
 
+        elif self.timer_running and current_time == "00:00":
+            self.timer_schedule.rotate(-1)
+            next_up = self.timer_schedule[0]
 
+            if next_up == "Pomodoro":
+                self.current_time.set("25:00")
+            elif next_up == "Short Break":
+                self.current_time.set("05:00")
+            elif next_up == "Long Break":
+                self.current_time.set("10:00")
+
+            self.after(1000, self.countdown)
 
 
 if __name__ == "__main__":
