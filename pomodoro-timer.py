@@ -28,14 +28,20 @@ class Timer(ttk.Frame):
         self.timer_schedule = deque(self.timer_order)
         self.current_timer_label = tk.StringVar(value=self.timer_schedule[0])
 
+        # dynamic label
         timer_label = ttk.Label(self, textvariable=self.current_timer_label)
         timer_label.grid(row=0, column=0, sticky="W", padx=(10, 0), pady=(10,0))
 
+        # timer frame including counter
         timer_frame = ttk.Frame(self, height="100")
-        timer_frame.grid(pady=(10, 0), sticky="NSEW")
-
+        timer_frame.grid(row=1, column=0, pady=(10, 0), sticky="NSEW")
         timer_counter = ttk.Label(timer_frame, textvariable=self.current_time)
         timer_counter.place(relx=0.5, rely=0.5, anchor="center")
+
+        # button frame
+        button_container = ttk.Frame(self, padding=10)
+        button_container.grid(row=2, column=0, sticky="EW")
+
 
         self.countdown()
 
