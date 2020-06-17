@@ -23,10 +23,11 @@ class Timer(ttk.Frame):
         super().__init__(parent)
 
         self.current_time = tk.StringVar(value="00:10")
-        self.timer_running = True
+        self.timer_running = False
         self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
         self.timer_schedule = deque(self.timer_order)
         self.current_timer_label = tk.StringVar(value=self.timer_schedule[0])
+        self._timer_countdown_job = None
 
         # dynamic label
         timer_label = ttk.Label(self, textvariable=self.current_timer_label)
@@ -44,12 +45,30 @@ class Timer(ttk.Frame):
         btn_container.columnconfigure((0, 1), weight=1)
 
         # start/stop buttons
-        start_btn = ttk.Button(btn_container, text="Start")
-        start_btn.grid(row=0, column=0)
-        stop_btn = ttk.Button(btn_container, text="Stop")
-        stop_btn.grid(row=0, column=1)
+        self.start_btn = ttk.Button(btn_container,
+                               text="Start",
+                               command=self.start_timer)
+        self.start_btn.grid(row=0, column=0, sticky="EW")
+        self.stop_btn = ttk.Button(btn_container,
+                              text="Stop",
+                              command=self.stop_timer,
+                              state="disabled")
+        self.stop_btn.grid(row=0, column=1, sticky="EW", padx=5)
 
+    def start_timer(self):
+        self.timer_running = True
+        self.start_btn["state"] = "disabled"
+        self.stop_btn["state"] = "enabled"
         self.countdown()
+
+    def stop_timer(self):
+        self.timer_running = False
+        self.start_btn["state"] = "enabled"
+        self.stop_btn["state"] = "disabled"
+
+        if self._timer_countdown_job:
+            self.after_cancel(self._timer_countdown_job)
+            self._timer_countdown_job = None
 
     def countdown(self):
         current_time = self.current_time.get()
@@ -65,7 +84,7 @@ class Timer(ttk.Frame):
                 minutes = int(minutes) - 1
 
             self.current_time.set(f"{minutes:02d}:{seconds:02d}")
-            self.after(1000, self.countdown)
+            self._timer_countdown_job = self.after(1000, self.countdown)
 
         elif self.timer_running and current_time == "00:00":
             self.timer_schedule.rotate(-1)
@@ -79,7 +98,7 @@ class Timer(ttk.Frame):
             elif next_up == "Long Break":
                 self.current_time.set("10:00")
 
-            self.after(1000, self.countdown)
+            self._timer_countdown_job = self.after(1000, self.countdown)
 
 
 if __name__ == "__main__":
