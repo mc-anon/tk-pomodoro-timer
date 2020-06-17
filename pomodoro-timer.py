@@ -55,11 +55,11 @@ class Timer(ttk.Frame):
                               state="disabled")
         self.stop_btn.grid(row=0, column=1, sticky="EW", padx=5)
 
-        # reset button
-        self.reset_btn = ttk.Button(btn_container,
-                                    text="Reset")
-                                    #command=self.reset_timer)
-        self.reset_btn.grid(row=0, column=2, sticky="EW")
+        # reset button (doesn't need 'self' as it won't be accessed outside the method)
+        reset_btn = ttk.Button(btn_container,
+                                    text="Reset",
+                                    command=self.reset_timer)
+        reset_btn.grid(row=0, column=2, sticky="EW")
 
     def start_timer(self):
         self.timer_running = True
@@ -75,6 +75,12 @@ class Timer(ttk.Frame):
         if self._timer_countdown_job:
             self.after_cancel(self._timer_countdown_job)
             self._timer_countdown_job = None
+
+    def reset_timer(self):
+        self.stop_timer()
+        self.timer_schedule = deque(self.timer_order)
+        self.current_timer_label.set(self.timer_schedule[0])
+        self.current_time.set("25:00")
 
     def countdown(self):
         current_time = self.current_time.get()
