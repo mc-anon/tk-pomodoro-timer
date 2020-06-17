@@ -42,7 +42,7 @@ class Timer(ttk.Frame):
         # button frame
         btn_container = ttk.Frame(self, padding=10)
         btn_container.grid(row=2, column=0, sticky="EW")
-        btn_container.columnconfigure((0, 1), weight=1)
+        btn_container.columnconfigure((0, 1, 2), weight=1)
 
         # start/stop buttons
         self.start_btn = ttk.Button(btn_container,
@@ -54,6 +54,12 @@ class Timer(ttk.Frame):
                               command=self.stop_timer,
                               state="disabled")
         self.stop_btn.grid(row=0, column=1, sticky="EW", padx=5)
+
+        # reset button
+        self.reset_btn = ttk.Button(btn_container,
+                                    text="Reset")
+                                    #command=self.reset_timer)
+        self.reset_btn.grid(row=0, column=2, sticky="EW")
 
     def start_timer(self):
         self.timer_running = True
