@@ -39,9 +39,15 @@ class Timer(ttk.Frame):
         timer_counter.place(relx=0.5, rely=0.5, anchor="center")
 
         # button frame
-        button_container = ttk.Frame(self, padding=10)
-        button_container.grid(row=2, column=0, sticky="EW")
+        btn_container = ttk.Frame(self, padding=10)
+        btn_container.grid(row=2, column=0, sticky="EW")
+        btn_container.columnconfigure((0, 1), weight=1)
 
+        # start/stop buttons
+        start_btn = ttk.Button(btn_container, text="Start")
+        start_btn.grid(row=0, column=0)
+        stop_btn = ttk.Button(btn_container, text="Stop")
+        stop_btn.grid(row=0, column=1)
 
         self.countdown()
 
