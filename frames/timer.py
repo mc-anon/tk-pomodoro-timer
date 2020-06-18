@@ -7,6 +7,7 @@ class Timer(ttk.Frame):
     def __init__(self, parent, controller, show_settings):
         super().__init__(parent)
 
+        self.grid_columnconfigure(0, weight=1)
         self["style"] = "Background.TFrame"
 
         self.controller = controller
@@ -15,8 +16,6 @@ class Timer(ttk.Frame):
         self.timer_running = False
         self.current_timer_label = tk.StringVar(value=controller.timer_schedule[0])
         self._timer_countdown_job = None
-
-        self.grid_columnconfigure(0, weight=1)
 
         # dynamic label
         timer_label = ttk.Label(self, textvariable=self.current_timer_label, style="LightText.TLabel")

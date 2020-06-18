@@ -25,7 +25,7 @@ class MainApp(tk.Tk):
                         "TimerText.TLabel",
                         background=COLOUR_LIGHT_BACKGROUND,
                         foreground=COLOUR_DARK_TEXT,
-                        font="Courier 38"
+                        font="Courier 80"
         )
         style.configure(
                         "LightText.TLabel",
@@ -42,14 +42,16 @@ class MainApp(tk.Tk):
                   background=[("active", COLOUR_PRIMARY), ("disabled", COLOUR_LIGHT_TEXT)]
         )
 
-        self.title = "Pomodoro Timer"
+        self["background"] = COLOUR_PRIMARY  # tk widget doesn't have a 'style' property, so "background" has to be set directly
+
+        self.title("Pomodoro Timer")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
         # configurable variables for timer lengths
         self.pomodoro = tk.StringVar(value=25)
         self.short_break = tk.StringVar(value=5)
-        self.long_break = tk.StringVar(value=10)
+        self.long_break = tk.StringVar(value=15)
         # potential for timer order to be configurable by User
         self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
         self.timer_schedule = deque(self.timer_order)
