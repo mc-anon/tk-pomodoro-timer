@@ -10,23 +10,31 @@ class MainApp(tk.Tk):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
+        # configurable variables for timer lengths
+        self.pomodoro = tk.StringVar(value=25)
+        self.short_break = tk.StringVar(value=5)
+        self.long_break = tk.StringVar(value=10)
+        # potential for timer order to be configurable by User
+        self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
+        self.timer_schedule = deque(self.timer_order)
+
         container = ttk.Frame(self)
         container.grid()
         container.columnconfigure(0, weight=1)
 
-        timer_frame = Timer(container)
+        timer_frame = Timer(container, self)
         timer_frame.grid(sticky="NSEW")
 
 
 class Timer(ttk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, controller):
         super().__init__(parent)
 
-        self.current_time = tk.StringVar(value="00:10")
+        self.controller = controller
+        pomodoro_time = int(controller.pomodoro.get())
+        self.current_time = tk.StringVar(value=f"{pomodoro_time:02d}:00")
         self.timer_running = False
-        self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
-        self.timer_schedule = deque(self.timer_order)
-        self.current_timer_label = tk.StringVar(value=self.timer_schedule[0])
+        self.current_timer_label = tk.StringVar(value=controller.timer_schedule[0])
         self._timer_countdown_job = None
 
         # dynamic label
@@ -78,9 +86,10 @@ class Timer(ttk.Frame):
 
     def reset_timer(self):
         self.stop_timer()
-        self.timer_schedule = deque(self.timer_order)
-        self.current_timer_label.set(self.timer_schedule[0])
-        self.current_time.set("25:00")
+        self.controller.timer_schedule = deque(self.controller.timer_order)
+        self.current_timer_label.set(self.controller.timer_schedule[0])
+        pomodoro_time = int(self.controller.pomodoro.get())
+        self.current_time.set(f"{pomodoro_time:02d}:00")
 
     def countdown(self):
         current_time = self.current_time.get()
@@ -99,16 +108,19 @@ class Timer(ttk.Frame):
             self._timer_countdown_job = self.after(1000, self.countdown)
 
         elif self.timer_running and current_time == "00:00":
-            self.timer_schedule.rotate(-1)
-            next_up = self.timer_schedule[0]
+            self.controller.timer_schedule.rotate(-1)
+            next_up = self.controller.timer_schedule[0]
             self.current_timer_label.set(next_up)
 
             if next_up == "Pomodoro":
-                self.current_time.set("25:00")
+                pomodoro_time = int(self.controller.pomodoro.get())
+                self.current_time.set(f"{pomodoro_time:02d}:00")
             elif next_up == "Short Break":
-                self.current_time.set("05:00")
+                short_time = int(self.controller.short_break.get())
+                self.current_time.set(f"{short_time:02d}:00")
             elif next_up == "Long Break":
-                self.current_time.set("10:00")
+                long_time = int(self.controller.long_break.get())
+                self.current_time.set(f"{long_time:02d}:00")
 
             self._timer_countdown_job = self.after(1000, self.countdown)
 
