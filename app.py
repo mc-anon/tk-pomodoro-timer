@@ -27,15 +27,13 @@ class MainApp(tk.Tk):
         # app frames/pages
         self.frames = dict()
 
-        """timer_frame = Timer(container, self)
-        timer_frame.grid(sticky="NSEW")
-        settings_frame = Settings(container, self)
-        settings_frame.grid(sticky="NSEW")"""
+        timer_frame = Timer(container, self, lambda: self.show_frame(Settings))
+        timer_frame.grid(row=0, column=0, sticky="NSEW")
+        settings_frame = Settings(container, self, lambda: self.show_frame(Timer))
+        settings_frame.grid(row=0, column=0, sticky="NSEW")
 
-        for FrameClass in (Timer, Settings):
-            frame = FrameClass(container, self)
-            frame.grid(row=0, column=0, sticky="NSEW")
-            self.frames[FrameClass] = frame
+        self.frames[Timer] = timer_frame
+        self.frames[Settings] = settings_frame
 
         self.show_frame(Timer)
 
