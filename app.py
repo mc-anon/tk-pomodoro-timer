@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from collections import deque
-from frames import Timer
+from frames import Timer, Settings
 
 
 class MainApp(tk.Tk):
@@ -19,12 +19,30 @@ class MainApp(tk.Tk):
         self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
         self.timer_schedule = deque(self.timer_order)
 
+        # container for app frames/pages
         container = ttk.Frame(self)
         container.grid()
         container.columnconfigure(0, weight=1)
 
-        timer_frame = Timer(container, self)
+        # app frames/pages
+        self.frames = dict()
+
+        """timer_frame = Timer(container, self)
         timer_frame.grid(sticky="NSEW")
+        settings_frame = Settings(container, self)
+        settings_frame.grid(sticky="NSEW")"""
+
+        for FrameClass in (Timer, Settings):
+            frame = FrameClass(container, self)
+            frame.grid(row=0, column=0, sticky="NSEW")
+            self.frames[FrameClass] = frame
+
+        self.show_frame(Timer)
+
+    def show_frame(self, container):
+        frame = self.frames[container]
+        frame.tkraise()
+
 
 
 if __name__ == "__main__":
