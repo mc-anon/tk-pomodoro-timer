@@ -44,6 +44,15 @@ class MainApp(tk.Tk):
                   "PomodoroButton.TButton",
                   background=[("active", COLOUR_PRIMARY), ("disabled", COLOUR_LIGHT_TEXT)]
         )
+        style.configure(
+            "PomodoroButton.TRadiobutton",
+            background=COLOUR_SECONDARY,
+            foreground=COLOUR_LIGHT_TEXT
+        )
+        style.map(
+            "PomodoroButton.TRadiobutton",
+            background=[("active", COLOUR_PRIMARY), ("disabled", COLOUR_LIGHT_TEXT), ("selected", COLOUR_PRIMARY)]
+        )
 
         self["background"] = COLOUR_PRIMARY  # tk widget doesn't have a 'style' property, so "background" has to be set directly
 
@@ -55,9 +64,14 @@ class MainApp(tk.Tk):
         self.pomodoro = tk.StringVar(value=25)
         self.short_break = tk.StringVar(value=5)
         self.long_break = tk.StringVar(value=10)
+
+        self.timer_type = tk.StringVar(value="Pomodoro")
+
         # potential for timer order to be configurable by User
         self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
         self.timer_schedule = deque(self.timer_order)
+
+
 
         # container for app frames/pages
         container = ttk.Frame(self)

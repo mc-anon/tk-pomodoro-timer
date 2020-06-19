@@ -11,9 +11,34 @@ class Settings(ttk.Frame):
 
         self["style"] = "Background.TFrame"
 
+        # container for radio button
+        radio_container = ttk.Frame(self, style="Background.TFrame")
+        radio_container.grid(row=0, column=0, sticky="EW", padx=10, pady=(20,0))
+        radio_container.columnconfigure(0, weight=1)
+        pomodoro_option = ttk.Radiobutton(
+            radio_container,
+            text="Pomodoro",
+            variable=controller.timer_type,
+            value="Pomodoro",
+
+            width=10,
+            style="PomodoroButton.TRadiobutton"
+        )
+        regular_option = ttk.Radiobutton(
+            radio_container,
+            text="Regular",
+            variable=controller.timer_type,
+            value="Regular",
+
+            width=10,
+            style="PomodoroButton.TRadiobutton"
+        )
+        pomodoro_option.grid(row=0, column=0, sticky=None)
+        regular_option.grid(row=1, column=0, sticky=None)
+
         # container for all settings
         settings_container = ttk.Frame(self, padding="30 15 30 15", style="Background.TFrame")
-        settings_container.grid(row=0, column=0, sticky="EW", padx=10, pady=10)
+        settings_container.grid(row=1, column=0, sticky="EW", padx=10, pady=10)
         settings_container.columnconfigure(0, weight=1)
         settings_container.rowconfigure(1, weight=1)
 
@@ -29,7 +54,6 @@ class Settings(ttk.Frame):
                                   width=15,
                                   relief="ridge")
         pomodoro_box.grid(row=0, column=1, sticky="EW")
-
 
         # short break label and spinbox
         sb_label = ttk.Label(settings_container, text="Short Break: ", style="LightText.TLabel")
@@ -62,7 +86,7 @@ class Settings(ttk.Frame):
 
         # back btn container
         btn_container = ttk.Frame(self)
-        btn_container.grid(row=1, column=0, sticky="EW", padx=10)
+        btn_container.grid(row=2, column=0, sticky="EW", padx=10)
         btn_container.columnconfigure(0, weight=1)
         # back btn
         back_btn = ttk.Button(btn_container, text="← Back", command=show_timer, style="PomodoroButton.TButton")
