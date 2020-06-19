@@ -81,6 +81,15 @@ class MainApp(tk.Tk):
         frame = self.frames[container]
         frame.tkraise()
 
+        # the following code is a potential fix for the spinbox resizing bug
+        """
+        for frame in self.frames:
+            self.frames[frame].grid_forget()
+        frame = self.frames[container]
+        self.frames[container].grid()
+        frame.update_idletasks()
+        """
+
 
 if __name__ == "__main__":
     app = MainApp()

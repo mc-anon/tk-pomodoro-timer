@@ -26,8 +26,10 @@ class Settings(ttk.Frame):
                                   increment=1,
                                   textvariable=controller.pomodoro,
                                   justify="center",
-                                  width=15)
+                                  width=15,
+                                  relief="ridge")
         pomodoro_box.grid(row=0, column=1, sticky="EW")
+
 
         # short break label and spinbox
         sb_label = ttk.Label(settings_container, text="Short Break: ", style="LightText.TLabel")
@@ -38,7 +40,8 @@ class Settings(ttk.Frame):
                             increment=1,
                             textvariable=controller.short_break,
                             justify="center",
-                            width=15)
+                            width=15,
+                            relief="ridge")
         sb_box.grid(row=1, column=1, sticky="EW")
 
         # long break label and spinbox
@@ -50,7 +53,8 @@ class Settings(ttk.Frame):
                              increment=1,
                              textvariable=controller.long_break,
                              justify="center",
-                             width=15)
+                             width=15,
+                             relief="ridge")
         lng_box.grid(row=2, column=1, sticky="EW")
 
         for child in settings_container.winfo_children():
