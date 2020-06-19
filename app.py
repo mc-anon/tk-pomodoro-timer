@@ -49,9 +49,9 @@ class MainApp(tk.Tk):
         self.rowconfigure(1, weight=1)
 
         # configurable variables for timer lengths
-        self.pomodoro = tk.StringVar(value=25)
-        self.short_break = tk.StringVar(value=5)
-        self.long_break = tk.StringVar(value=15)
+        self.pomodoro = tk.StringVar(value=0)
+        self.short_break = tk.StringVar(value=0)
+        self.long_break = tk.StringVar(value=0)
         # potential for timer order to be configurable by User
         self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
         self.timer_schedule = deque(self.timer_order)
@@ -77,7 +77,6 @@ class MainApp(tk.Tk):
     def show_frame(self, container):
         frame = self.frames[container]
         frame.tkraise()
-
 
 
 if __name__ == "__main__":
