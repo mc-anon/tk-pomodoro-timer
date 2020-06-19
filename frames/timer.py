@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from collections import deque
+import simpleaudio as sa
 
 
 class Timer(ttk.Frame):
@@ -16,6 +17,7 @@ class Timer(ttk.Frame):
         self.timer_running = False
         self.current_timer_label = tk.StringVar(value=controller.timer_schedule[0])
         self._timer_countdown_job = None
+        self._chime = sa.WaveObject.from_wave_file('break_tone.wav')
 
         # dynamic label
         timer_label = ttk.Label(self, textvariable=self.current_timer_label, style="LightText.TLabel")
@@ -101,6 +103,7 @@ class Timer(ttk.Frame):
             self._timer_countdown_job = self.after(1000, self.countdown)
 
         elif self.timer_running and current_time == "00:00":
+            self._chime.play()
             self.controller.timer_schedule.rotate(-1)
             next_up = self.controller.timer_schedule[0]
             self.current_timer_label.set(next_up)
