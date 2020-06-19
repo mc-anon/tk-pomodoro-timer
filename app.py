@@ -4,11 +4,12 @@ from collections import deque
 from frames import Timer, Settings
 
 # define colour scheme
-COLOUR_PRIMARY = "#35725d"
-COLOUR_SECONDARY = "#619c85"
+COLOUR_PRIMARY = "#009688"
+COLOUR_SECONDARY = "#54b2a9"
+COLOUR_TERTIARY = "#83d0c9"
 COLOUR_LIGHT_BACKGROUND = "#fff"
 COLOUR_LIGHT_TEXT = "#eee"
-COLOUR_DARK_TEXT = "#81bfa3"
+COLOUR_DARK_TEXT = "#009688"
 
 
 class MainApp(tk.Tk):
@@ -20,12 +21,14 @@ class MainApp(tk.Tk):
         style.theme_use("clam")
 
         style.configure("Timer.TFrame", background=COLOUR_LIGHT_BACKGROUND)
+        style.configure("Total.TFrame", background=COLOUR_TERTIARY)
+        style.configure("TotalText.TLabel", background=COLOUR_TERTIARY, foreground=COLOUR_DARK_TEXT)
         style.configure("Background.TFrame", background=COLOUR_PRIMARY)
         style.configure(
                         "TimerText.TLabel",
                         background=COLOUR_LIGHT_BACKGROUND,
                         foreground=COLOUR_DARK_TEXT,
-                        font="Courier 80"
+                        font="Courier 70"
         )
         style.configure(
                         "LightText.TLabel",
@@ -49,9 +52,9 @@ class MainApp(tk.Tk):
         self.rowconfigure(1, weight=1)
 
         # configurable variables for timer lengths
-        self.pomodoro = tk.StringVar(value=0)
-        self.short_break = tk.StringVar(value=0)
-        self.long_break = tk.StringVar(value=0)
+        self.pomodoro = tk.StringVar(value=25)
+        self.short_break = tk.StringVar(value=5)
+        self.long_break = tk.StringVar(value=10)
         # potential for timer order to be configurable by User
         self.timer_order = ["Pomodoro", "Short Break", "Pomodoro", "Short Break", "Pomodoro", "Long Break"]
         self.timer_schedule = deque(self.timer_order)
