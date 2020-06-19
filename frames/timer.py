@@ -37,9 +37,15 @@ class Timer(ttk.Frame):
         timer_counter = ttk.Label(timer_frame, textvariable=self.current_time, style="TimerText.TLabel")
         timer_counter.place(relx=0.5, rely=0.5, anchor="center")
 
+        # total time frame
+        total_frame = ttk.Frame(self, height="30")
+        total_frame.grid(row=2, column=0, columnspan=2, sticky="NSEW")
+        total_label = ttk.Label(total_frame, text="00:00:00", textvariable=None)
+        total_label.place(relx=0.5, rely=0.5, anchor="center")
+
         # button frame
         btn_container = ttk.Frame(self, padding=10, style="Background.TFrame")
-        btn_container.grid(row=2, column=0, columnspan=2, sticky="EW")
+        btn_container.grid(row=3, column=0, columnspan=2, sticky="EW")
         btn_container.columnconfigure((0, 1, 2), weight=1)
 
         # start/stop buttons
@@ -118,10 +124,10 @@ class Timer(ttk.Frame):
             elif next_up == "Short Break":
                 self.short_tone.play()
                 short_time = int(self.controller.short_break.get())
-                self.current_time.set(f"{short_time:02d}:04")
+                self.current_time.set(f"{short_time:02d}:00")
             elif next_up == "Long Break":
                 self.long_tone.play()
                 long_time = int(self.controller.long_break.get())
-                self.current_time.set(f"{long_time:02d}:15")
+                self.current_time.set(f"{long_time:02d}:00")
 
             self._timer_countdown_job = self.after(1000, self.countdown)
