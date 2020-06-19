@@ -4,11 +4,11 @@ from collections import deque
 from frames import Timer, Settings
 
 # define colour scheme
-COLOUR_PRIMARY = "#2e3f4f"
-COLOUR_SECONDARY = "#293846"
+COLOUR_PRIMARY = "#35725d"
+COLOUR_SECONDARY = "#619c85"
 COLOUR_LIGHT_BACKGROUND = "#fff"
 COLOUR_LIGHT_TEXT = "#eee"
-COLOUR_DARK_TEXT = "#8095a8"
+COLOUR_DARK_TEXT = "#81bfa3"
 
 
 class MainApp(tk.Tk):
