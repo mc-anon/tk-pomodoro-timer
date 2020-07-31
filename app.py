@@ -14,7 +14,7 @@ COLOUR_DARK_TEXT = "#009688"
 
 class MainApp(tk.Tk):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, *kwargs)
+        super().__init__(*args, **kwargs)
 
         # create styles
         style = ttk.Style(self)
