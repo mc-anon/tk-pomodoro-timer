@@ -7,7 +7,8 @@ class Settings(ttk.Frame):
         super().__init__(parent)
 
         self.columnconfigure(0, weight=1)
-        self.rowconfigure(2, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
 
         self["style"] = "Background.TFrame"
 
