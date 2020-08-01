@@ -14,7 +14,7 @@ Pomodoro Timer is based on a project from this course for Tkinter on Udemy: http
 The aim is to extend the functionality of the original.
 
 
-## Notes before use
+# Notes before use
 
 Open up a Terminal and check your local Python version:
 ```shell script
