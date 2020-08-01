@@ -6,8 +6,8 @@ The technique breaks down work into timed intervals called 'pomodoros', typicall
 
 The app is configured to the above time lengths by default, but they are customisable within the app.
 
-![timer-ui](https://github.com/mc-anon/tk-pomodoro-timer/blob/assets/screenshot.png 
-)
+![timer-ui](https://github.com/mc-anon/tk-pomodoro-timer/blob/master/assets/screenshot.png) 
+
 
 Pomodoro Timer is based on a project from this course for Tkinter on Udemy: https://www.udemy.com/course/desktop-gui-python-tkinter/
 
